@@ -4,7 +4,7 @@ use reqwest::Client;
 use serde::Serialize;
 use serde::{de::DeserializeOwned, Deserialize};
 
-mod responses;
+pub mod responses;
 
 #[derive(Deserialize)]
 #[cfg_attr(feature = "serialize", derive(Serialize))]
