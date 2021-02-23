@@ -6,6 +6,23 @@ use serde::{de::DeserializeOwned, Deserialize};
 
 pub mod responses;
 
+/// Helper function to generate user agent
+///
+/// It has the following format `<platform>:<app ID>:<version string> (by /u/<reddit username>)`
+/// and is fully compliant with [reddi api rules](https://github.com/reddit-archive/reddit/wiki/API)
+///
+/// Idealy app_id and version could be figured out at build time but I have not had the occasion
+/// to try.
+pub fn user_agent(app_id: &str, version: &str, username: &str) -> String {
+    format!(
+        "{}:{}:{} (by /u/{})",
+        std::env::consts::OS,
+        app_id,
+        version,
+        username
+    )
+}
+
 #[derive(Deserialize)]
 #[cfg_attr(feature = "serialize", derive(Serialize))]
 #[cfg_attr(feature = "debug_attr", derive(Debug))]
