@@ -46,6 +46,7 @@ impl Rucola {
         password: &str,
         client_id: &str,
         secret_token: &str,
+        user_agent: &str,
     ) -> Result<Self> {
         let form = [
             ("grant_type", "password"),
@@ -54,7 +55,7 @@ impl Rucola {
         ];
 
         let client = Client::builder()
-            .user_agent("ApiTest/0.1.0")
+            .user_agent(user_agent)
             .build()
             .context("Failed to build client")?;
 
