@@ -5,6 +5,9 @@ authors = ["Federico Morrone <contact@morrone.dev>"]
 edition = "2018"
 license = "MIT"
 description = "Reddi api wrapper"
+documentation = "https://docs.rs/rucola/"
+repository = "https://github.com/morr0ne/rucola"
+homepage = "https://github.com/morr0ne/rucola"
 
 [features]
 default = ["debug_attr"]
