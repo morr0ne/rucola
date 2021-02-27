@@ -88,7 +88,50 @@ pub struct Me {
 #[cfg_attr(feature = "serialize", derive(Serialize))]
 #[cfg_attr(feature = "debug_attr", derive(Debug))]
 #[cfg_attr(feature = "deny_unknown_fields", serde(deny_unknown_fields))]
-pub struct Features {}
+pub struct Features {
+    awards_on_streams: bool,
+    chat: bool,
+    chat_subreddit: bool,
+    chat_user_settings: bool,
+    chat_group_rollout: bool,
+    do_not_track: bool,
+    expensive_coins_package: bool,
+    econ_wallet_service: bool,
+    is_email_permission_required: bool,
+    mod_service_mute_writes: bool,
+    mod_awards: bool,
+    mweb_xpromo_modal_listing_click_daily_dismissible_ios: bool,
+    modlog_copyright_removal: bool,
+    mod_service_mute_reads: bool,
+    mweb_xpromo_interstitial_comments_ios: bool,
+    mweb_xpromo_interstitial_comments_android: bool,
+    mweb_xpromo_modal_listing_click_daily_dismissible_android: bool,
+    noreferrer_to_noopener: bool,
+    promoted_trend_blanks: bool,
+    premium_subscriptions_table: bool,
+    report_service_handles_report_writes_to_db_for_helpdesk_reports: bool,
+    report_service_handles_self_harm_reports: bool,
+    report_service_handles_report_writes_to_db_for_modmail_reports: bool,
+    reports_double_write_to_report_service_for_spam: bool,
+    reports_double_write_to_report_service_for_modmail_reports: bool,
+    report_service_handles_report_writes_to_db_for_sendbird_chats: bool,
+    report_service_handles_accept_report: bool,
+    reports_double_write_to_report_service_for_som: bool,
+    reports_double_write_to_report_service_for_users: bool,
+    report_service_handles_report_writes_to_db_for_users: bool,
+    report_service_handles_report_writes_to_db: bool,
+    reports_double_write_to_report_service_for_helpdesk_reports: bool,
+    report_service_handles_report_writes_to_db_for_spam: bool,
+    reports_double_write_to_report_service_for_sendbird_chats: bool,
+    reports_double_write_to_report_service: bool,
+    report_service_handles_report_writes_to_db_for_awards: bool,
+    reports_double_write_to_report_service_for_awards: bool,
+    resized_styles_images: bool,
+    report_service_handles_report_writes_to_db_for_som: bool,
+    show_amp_link: bool,
+    show_nps_survey: bool,
+    spez_modal: bool,
+}
 
 #[derive(Deserialize)]
 #[cfg_attr(feature = "serialize", derive(Serialize))]

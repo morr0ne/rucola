@@ -2,31 +2,19 @@ use serde::Deserialize;
 #[cfg(feature = "serialize")]
 use serde::Serialize;
 
-#[derive(Deserialize)]
-#[cfg_attr(feature = "serialize", derive(Serialize))]
-#[cfg_attr(feature = "debug_attr", derive(Debug))]
-#[cfg_attr(feature = "deny_unknown_fields", serde(deny_unknown_fields))]
-pub struct Trophies {
-    pub data: Data,
-    pub kind: String,
-}
+use crate::responses::BasicThing;
+
+pub type Trophies = BasicThing<TrophiesData>;
 
 #[derive(Deserialize)]
 #[cfg_attr(feature = "serialize", derive(Serialize))]
 #[cfg_attr(feature = "debug_attr", derive(Debug))]
 #[cfg_attr(feature = "deny_unknown_fields", serde(deny_unknown_fields))]
-pub struct Data {
+pub struct TrophiesData {
     pub trophies: Vec<Trophy>,
 }
 
-#[derive(Deserialize)]
-#[cfg_attr(feature = "serialize", derive(Serialize))]
-#[cfg_attr(feature = "debug_attr", derive(Debug))]
-#[cfg_attr(feature = "deny_unknown_fields", serde(deny_unknown_fields))]
-pub struct Trophy {
-    pub data: TrophyData,
-    pub kind: String,
-}
+pub type Trophy = BasicThing<TrophyData>;
 
 #[derive(Deserialize)]
 #[cfg_attr(feature = "serialize", derive(Serialize))]
@@ -39,5 +27,6 @@ pub struct TrophyData {
     pub icon_40: String,
     pub icon_70: String,
     pub id: Option<String>,
+    pub name: Option<String>,
     pub url: Option<String>,
 }
