@@ -101,7 +101,7 @@ impl Rucola {
 
     pub async fn me_karma(&self) -> Result<responses::me::Karma> {
         let response = self
-            .get_json::<responses::me::Karma>("https://oauth.reddit.com/api/v1/karma")
+            .get_json::<responses::me::Karma>("https://oauth.reddit.com/api/v1/me/karma")
             .await?;
 
         Ok(response)
@@ -109,7 +109,7 @@ impl Rucola {
 
     pub async fn me_prefs(&self) -> Result<responses::me::Prefs> {
         let response = self
-            .get_json::<responses::me::Prefs>("https://oauth.reddit.com/api/v1/prefs")
+            .get_json::<responses::me::Prefs>("https://oauth.reddit.com/api/v1/me/prefs")
             .await?;
 
         Ok(response)
@@ -117,7 +117,19 @@ impl Rucola {
 
     pub async fn me_trophies(&self) -> Result<responses::me::Trophies> {
         let response = self
-            .get_json::<responses::me::Trophies>("https://oauth.reddit.com/api/v1/trophies")
+            .get_json::<responses::me::Trophies>("https://oauth.reddit.com/api/v1/me/trophies")
+            .await?;
+
+        Ok(response)
+    }
+
+    pub async fn subreddits_mine_subscriber(
+        &self,
+    ) -> Result<responses::subreddits::mine::Subscriber> {
+        let response = self
+            .get_json::<responses::subreddits::mine::Subscriber>(
+                "https://oauth.reddit.com/subreddits/mine/subscriber",
+            )
             .await?;
 
         Ok(response)
