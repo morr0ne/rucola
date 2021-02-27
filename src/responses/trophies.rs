@@ -2,7 +2,13 @@ use serde::Deserialize;
 #[cfg(feature = "serialize")]
 use serde::Serialize;
 
-use crate::responses::BasicThing;
+#[derive(Deserialize)]
+#[cfg_attr(feature = "serialize", derive(Serialize))]
+#[cfg_attr(feature = "debug_attr", derive(Debug))]
+pub struct BasicThing<T> {
+    pub kind: String,
+    pub data: T,
+}
 
 pub type Trophies = BasicThing<TrophiesData>;
 

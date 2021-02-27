@@ -1,10 +1,3 @@
-pub mod karma;
-pub mod prefs;
-pub mod trophies;
-pub use karma::Karma;
-pub use prefs::Prefs;
-pub use trophies::Trophies;
-
 use serde::Deserialize;
 #[cfg(feature = "serialize")]
 use serde::Serialize;
@@ -13,7 +6,7 @@ use serde::Serialize;
 #[cfg_attr(feature = "serialize", derive(Serialize))]
 #[cfg_attr(feature = "debug_attr", derive(Debug))]
 #[cfg_attr(feature = "deny_unknown_fields", serde(deny_unknown_fields))]
-pub struct Me {
+pub struct Account {
     pub awardee_karma: u32,
     pub awarder_karma: u32,
     pub can_create_subreddit: bool,

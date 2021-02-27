@@ -2,15 +2,11 @@ use serde::Deserialize;
 #[cfg(feature = "serialize")]
 use serde::Serialize;
 
-use crate::responses::Listing;
-
-pub type Subscriber = Listing<SubscriberData>;
-
 #[derive(Deserialize)]
 #[cfg_attr(feature = "serialize", derive(Serialize))]
 #[cfg_attr(feature = "debug_attr", derive(Debug))]
 #[cfg_attr(feature = "deny_unknown_fields", serde(deny_unknown_fields))]
-pub struct SubscriberData {
+pub struct Subreddit {
     pub allow_galleries: bool,
     pub active_user_count: Option<serde_json::Value>,
     pub accounts_active: Option<serde_json::Value>,
