@@ -1,30 +1,52 @@
-pub mod me;
-pub mod subreddits;
-
+use enum_as_inner::EnumAsInner;
 use serde::Deserialize;
 #[cfg(feature = "serialize")]
 use serde::Serialize;
 
-#[derive(Deserialize)]
+pub mod account;
+pub mod listing;
+pub mod prefs;
+pub mod subreddit;
+pub mod trophies;
+pub mod revision;
+
+pub use account::Account;
+pub use listing::Listing;
+pub use prefs::Prefs;
+pub use subreddit::Subreddit;
+pub use trophies::Trophies;
+pub use revision::Revision;
+
+#[derive(Deserialize, EnumAsInner)]
+#[serde(tag = "kind", content = "data")]
 #[cfg_attr(feature = "serialize", derive(Serialize))]
 #[cfg_attr(feature = "debug_attr", derive(Debug))]
-pub struct BasicThing<T> {
-    pub kind: String,
-    pub data: T,
+pub enum ThingKind {
+    #[serde(rename = "t1")]
+    Comment,
+    #[serde(rename = "t2")]
+    Account(Account),
+    #[serde(rename = "t3")]
+    Link,
+    #[serde(rename = "t4")]
+    Message,
+    #[serde(rename = "t5")]
+    Subreddit(Subreddit),
+    #[serde(rename = "t6")]
+    Award,
+    KarmaList(Vec<KarmaListItem>),
+    Listing(Listing<ThingKind>),
+    TrophyList,
+    #[serde(rename = "wikipagelisting")]
+    WikiPageListing(Vec<String>),
 }
 
-pub type Listing<T> = BasicThing<ListingData<T>>;
-
 #[derive(Deserialize)]
 #[cfg_attr(feature = "serialize", derive(Serialize))]
 #[cfg_attr(feature = "debug_attr", derive(Debug))]
-pub struct ListingData<T> {
-    pub after: Option<String>,
-    pub before: Option<String>,
-    pub children: Vec<BasicThing<T>>,
-    pub count: Option<u32>,
-    pub dist: Option<u32>,
-    pub limit: Option<String>,
-    pub modhash: Option<String>,
-    pub show: Option<serde_json::Value>,
+#[cfg_attr(feature = "deny_unknown_fields", serde(deny_unknown_fields))]
+pub struct KarmaListItem {
+    pub comment_karma: i32,
+    pub link_karma: i32,
+    pub sr: String,
 }

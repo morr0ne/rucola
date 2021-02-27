@@ -5,6 +5,7 @@ use serde::Serialize;
 use serde::{de::DeserializeOwned, Deserialize};
 
 pub mod responses;
+use responses::ThingKind;
 
 /// Helper function to generate user agent
 ///
@@ -91,45 +92,52 @@ impl Rucola {
         Ok(response)
     }
 
-    pub async fn me(&self) -> Result<responses::me::Me> {
+    pub async fn me(&self) -> Result<responses::ThingKind> {
         let response = self
-            .get_json::<responses::me::Me>("https://oauth.reddit.com/api/v1/me")
+            .get_json::<responses::ThingKind>("https://oauth.reddit.com/api/v1/me")
             .await?;
 
         Ok(response)
     }
 
-    pub async fn me_karma(&self) -> Result<responses::me::Karma> {
+    pub async fn me_karma(&self) -> Result<responses::ThingKind> {
         let response = self
-            .get_json::<responses::me::Karma>("https://oauth.reddit.com/api/v1/me/karma")
+            .get_json::<responses::ThingKind>("https://oauth.reddit.com/api/v1/me/karma")
             .await?;
 
         Ok(response)
     }
 
-    pub async fn me_prefs(&self) -> Result<responses::me::Prefs> {
+    pub async fn me_prefs(&self) -> Result<responses::Prefs> {
         let response = self
-            .get_json::<responses::me::Prefs>("https://oauth.reddit.com/api/v1/me/prefs")
+            .get_json::<responses::Prefs>("https://oauth.reddit.com/api/v1/me/prefs")
             .await?;
 
         Ok(response)
     }
 
-    pub async fn me_trophies(&self) -> Result<responses::me::Trophies> {
+    pub async fn me_trophies(&self) -> Result<responses::Trophies> {
         let response = self
-            .get_json::<responses::me::Trophies>("https://oauth.reddit.com/api/v1/me/trophies")
+            .get_json::<responses::Trophies>("https://oauth.reddit.com/api/v1/me/trophies")
             .await?;
 
         Ok(response)
     }
 
-    pub async fn subreddits_mine_subscriber(
-        &self,
-    ) -> Result<responses::subreddits::mine::Subscriber> {
+    pub async fn subreddits_mine_subscriber(&self) -> Result<ThingKind> {
         let response = self
-            .get_json::<responses::subreddits::mine::Subscriber>(
-                "https://oauth.reddit.com/subreddits/mine/subscriber",
-            )
+            .get_json::<ThingKind>("https://oauth.reddit.com/subreddits/mine/subscriber")
+            .await?;
+
+        Ok(response)
+    }
+
+    pub async fn wiki_pages(&self, subreddit: &str) -> Result<ThingKind> {
+        let response = self
+            .get_json::<ThingKind>(&format!(
+                " https://oauth.reddit.com/r/{}/wiki/pages",
+                subreddit
+            ))
             .await?;
 
         Ok(response)
