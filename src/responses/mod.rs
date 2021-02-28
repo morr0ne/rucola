@@ -6,16 +6,18 @@ use serde::Serialize;
 pub mod account;
 pub mod listing;
 pub mod prefs;
+pub mod revision;
 pub mod subreddit;
 pub mod trophies;
-pub mod revision;
+pub mod user_list;
 
 pub use account::Account;
 pub use listing::Listing;
 pub use prefs::Prefs;
+pub use revision::Revision;
 pub use subreddit::Subreddit;
 pub use trophies::Trophies;
-pub use revision::Revision;
+pub use user_list::UserList;
 
 #[derive(Deserialize, EnumAsInner)]
 #[serde(tag = "kind", content = "data")]
@@ -37,6 +39,7 @@ pub enum ThingKind {
     KarmaList(Vec<KarmaListItem>),
     Listing(Listing<ThingKind>),
     TrophyList,
+    UserList(UserList),
     #[serde(rename = "wikipagelisting")]
     WikiPageListing(Vec<String>),
 }

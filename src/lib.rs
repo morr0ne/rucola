@@ -89,12 +89,18 @@ impl Rucola {
     pub async fn get_json<T: DeserializeOwned>(&self, url: &str) -> Result<T> {
         let response = self.get(url).await?.json::<T>().await?;
 
+        // This stuff is here just for debbuging reason
+        // There's probably a better way but is a quick hack and it works so ¯\_(ツ)_/¯
+        // let response = self.get(url).await?.text().await?;
+        // tokio::fs::write("temp/res.json", &response).await?;
+        // let response = serde_json::from_str(&response)?;
+
         Ok(response)
     }
 
-    pub async fn me(&self) -> Result<responses::ThingKind> {
+    pub async fn me(&self) -> Result<responses::Account> {
         let response = self
-            .get_json::<responses::ThingKind>("https://oauth.reddit.com/api/v1/me")
+            .get_json::<responses::Account>("https://oauth.reddit.com/api/v1/me")
             .await?;
 
         Ok(response)
@@ -124,9 +130,57 @@ impl Rucola {
         Ok(response)
     }
 
+    pub async fn subreddits_popular(&self) -> Result<ThingKind> {
+        let response = self
+            .get_json::<ThingKind>("https://oauth.reddit.com/subreddits/popular")
+            .await?;
+
+        Ok(response)
+    }
+
+    pub async fn subreddits_new(&self) -> Result<ThingKind> {
+        let response = self
+            .get_json::<ThingKind>("https://oauth.reddit.com/subreddits/new")
+            .await?;
+
+        Ok(response)
+    }
+
+    pub async fn subreddits_gold(&self) -> Result<ThingKind> {
+        let response = self
+            .get_json::<ThingKind>("https://oauth.reddit.com/subreddits/gold")
+            .await?;
+
+        Ok(response)
+    }
+
+    pub async fn subreddits_default(&self) -> Result<ThingKind> {
+        let response = self
+            .get_json::<ThingKind>("https://oauth.reddit.com/subreddits/default")
+            .await?;
+
+        Ok(response)
+    }
+
     pub async fn subreddits_mine_subscriber(&self) -> Result<ThingKind> {
         let response = self
             .get_json::<ThingKind>("https://oauth.reddit.com/subreddits/mine/subscriber")
+            .await?;
+
+        Ok(response)
+    }
+
+    pub async fn subreddits_mine_contributor(&self) -> Result<ThingKind> {
+        let response = self
+            .get_json::<ThingKind>("https://oauth.reddit.com/subreddits/mine/contributor")
+            .await?;
+
+        Ok(response)
+    }
+
+    pub async fn subreddits_mine_moderator(&self) -> Result<ThingKind> {
+        let response = self
+            .get_json::<ThingKind>("https://oauth.reddit.com/subreddits/mine/moderator")
             .await?;
 
         Ok(response)
