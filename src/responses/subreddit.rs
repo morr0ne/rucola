@@ -29,6 +29,7 @@ pub struct Subreddit {
     pub community_icon: String,
     /// This could probably be an enum
     pub content_category: Option<String>,
+    pub coins: Option<u32>,
     pub can_assign_user_flair: bool,
     pub created: f64,
     pub collapse_deleted_comments: bool,
@@ -60,6 +61,7 @@ pub struct Subreddit {
     pub link_flair_enabled: bool,
     pub lang: String,
     pub mobile_banner_image: String,
+    pub mod_permissions: Option<Vec<String>>,
     pub name: String,
     pub notification_level: Option<String>,
     pub original_content_tag_enabled: bool,

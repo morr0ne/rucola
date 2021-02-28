@@ -87,13 +87,24 @@ impl Rucola {
     }
 
     pub async fn get_json<T: DeserializeOwned>(&self, url: &str) -> Result<T> {
-        let response = self.get(url).await?.json::<T>().await?;
+        // let response = self.get(url).await?.json::<T>().await?;
 
         // This stuff is here just for debbuging reason
         // There's probably a better way but is a quick hack and it works so ¯\_(ツ)_/¯
-        // let response = self.get(url).await?.text().await?;
-        // tokio::fs::write("temp/res.json", &response).await?;
-        // let response = serde_json::from_str(&response)?;
+        let response = self.get(url).await?.text().await?;
+        tokio::fs::write("temp/res.json", &response).await?;
+        let response = serde_json::from_str(&response)?;
+
+        Ok(response)
+    }
+
+    pub async fn username_available(&self, username: &str) -> Result<bool> {
+        let response = self
+            .get_json::<bool>(&format!(
+                "https://oauth.reddit.com/api/username_available?user={}",
+                username
+            ))
+            .await?;
 
         Ok(response)
     }
@@ -181,6 +192,17 @@ impl Rucola {
     pub async fn subreddits_mine_moderator(&self) -> Result<ThingKind> {
         let response = self
             .get_json::<ThingKind>("https://oauth.reddit.com/subreddits/mine/moderator")
+            .await?;
+
+        Ok(response)
+    }
+
+    pub async fn about_moderators(&self, subreddit: &str) -> Result<ThingKind> {
+        let response = self
+            .get_json::<ThingKind>(&format!(
+                " https://oauth.reddit.com/r/{}/about/moderators",
+                subreddit
+            ))
             .await?;
 
         Ok(response)
