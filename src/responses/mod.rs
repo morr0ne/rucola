@@ -4,6 +4,8 @@ use serde::Deserialize;
 use serde::Serialize;
 
 pub mod account;
+pub mod comment;
+pub mod link;
 pub mod listing;
 pub mod prefs;
 pub mod revision;
@@ -12,6 +14,8 @@ pub mod trophies;
 pub mod user_list;
 
 pub use account::Account;
+pub use comment::Comment;
+pub use link::Link;
 pub use listing::Listing;
 pub use prefs::Prefs;
 pub use revision::Revision;
@@ -25,11 +29,11 @@ pub use user_list::UserList;
 #[cfg_attr(feature = "debug_attr", derive(Debug))]
 pub enum ThingKind {
     #[serde(rename = "t1")]
-    Comment,
+    Comment(Comment),
     #[serde(rename = "t2")]
     Account(Account),
     #[serde(rename = "t3")]
-    Link,
+    Link(Link),
     #[serde(rename = "t4")]
     Message,
     #[serde(rename = "t5")]
