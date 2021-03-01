@@ -20,7 +20,7 @@ pub struct User {
     pub date: f64,
     pub id: String,
     /// This should definatly be an enum
-    pub mod_permissions: Vec<String>,
+    pub mod_permissions: Option<Vec<String>>,
     pub name: String,
     pub rel_id: String,
 }
