@@ -7,7 +7,7 @@ use serde::Serialize;
 #[cfg_attr(feature = "debug_attr", derive(Debug))]
 #[cfg_attr(feature = "deny_unknown_fields", serde(deny_unknown_fields))]
 pub struct Subreddit {
-    pub allow_galleries: bool,
+    pub allow_galleries: Option<bool>,
     pub active_user_count: Option<serde_json::Value>,
     pub accounts_active: Option<serde_json::Value>,
     pub advertiser_category: String,
@@ -49,11 +49,11 @@ pub struct Subreddit {
     pub header_size: Option<serde_json::Value>,
     pub has_menu_widget: bool,
     pub icon_size: Option<[u32; 2]>,
-    pub icon_img: String,
+    pub icon_img: Option<String>,
     pub is_enrolled_in_new_modmail: Option<serde_json::Value>,
     pub is_crosspostable_subreddit: Option<bool>,
     pub is_default_banner: Option<bool>,
-    pub is_default_icon: Option<bool>,
+    pub is_default_icon: Option<serde_json::Value>,
     pub id: String,
     pub is_chat_post_feature_enabled: Option<bool>,
     pub key_color: String,
