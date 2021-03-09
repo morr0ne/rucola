@@ -4,8 +4,8 @@ use reqwest::Client;
 use serde::Serialize;
 use serde::{de::DeserializeOwned, Deserialize};
 
-pub mod responses;
-use responses::ThingKind;
+pub mod things;
+use things::{Account, Prefs, Thing};
 
 /// Helper function to generate user agent
 ///
@@ -90,7 +90,7 @@ impl Rucola {
         let response = self.get(url).await?.json::<T>().await?;
 
         // This stuff is here just for debbuging reason
-        // There's probably a better way but is a quick hack and it works so ¯\_(ツ)_/¯
+        // There's probably a better way but this quick hack works for now so ¯\_(ツ)_/¯
         // let response = self.get(url).await?.text().await?;
         // tokio::fs::write("temp/res.json", &response).await?;
         // let response = serde_json::from_str(&response)?;
@@ -98,16 +98,15 @@ impl Rucola {
         Ok(response)
     }
 
-    pub async fn user_overview(&self, username: &str) -> Result<responses::ThingKind> {
-        let response = self
-            .get_json::<responses::ThingKind>(&format!(
-                "https://oauth.reddit.com/user/{}/overview",
-                username
-            ))
-            .await?;
-
-        Ok(response)
-    }
+    // pub async fn user_overview(&self, username: &str) -> Result<Thing<Listing<Thing<Subreddit>>>> {
+    //     let response = self
+    //         .get_json::<Thing<Listing<Thing<Subreddit>>>>(&format!(
+    //             "https://oauth.reddit.com/user/{}/overview",
+    //             username
+    //         ))
+    //         .await?;
+    //     Ok(response)
+    // }
 
     pub async fn username_available(&self, username: &str) -> Result<bool> {
         let response = self
@@ -120,97 +119,97 @@ impl Rucola {
         Ok(response)
     }
 
-    pub async fn me(&self) -> Result<responses::Account> {
+    pub async fn me(&self) -> Result<Account> {
         let response = self
-            .get_json::<responses::Account>("https://oauth.reddit.com/api/v1/me")
+            .get_json::<Account>("https://oauth.reddit.com/api/v1/me")
             .await?;
 
         Ok(response)
     }
 
-    pub async fn me_karma(&self) -> Result<responses::ThingKind> {
+    pub async fn me_karma(&self) -> Result<Thing> {
         let response = self
-            .get_json::<responses::ThingKind>("https://oauth.reddit.com/api/v1/me/karma")
+            .get_json::<Thing>("https://oauth.reddit.com/api/v1/me/karma")
             .await?;
 
         Ok(response)
     }
 
-    pub async fn me_prefs(&self) -> Result<responses::Prefs> {
+    pub async fn me_prefs(&self) -> Result<Prefs> {
         let response = self
-            .get_json::<responses::Prefs>("https://oauth.reddit.com/api/v1/me/prefs")
+            .get_json::<Prefs>("https://oauth.reddit.com/api/v1/me/prefs")
             .await?;
 
         Ok(response)
     }
 
-    pub async fn me_trophies(&self) -> Result<responses::Trophies> {
+    pub async fn me_trophies(&self) -> Result<Thing> {
         let response = self
-            .get_json::<responses::Trophies>("https://oauth.reddit.com/api/v1/me/trophies")
+            .get_json::<Thing>("https://oauth.reddit.com/api/v1/me/trophies")
             .await?;
 
         Ok(response)
     }
 
-    pub async fn subreddits_popular(&self) -> Result<ThingKind> {
+    pub async fn subreddits_popular(&self) -> Result<Thing> {
         let response = self
-            .get_json::<ThingKind>("https://oauth.reddit.com/subreddits/popular")
+            .get_json::<Thing>("https://oauth.reddit.com/subreddits/popular")
             .await?;
 
         Ok(response)
     }
 
-    pub async fn subreddits_new(&self) -> Result<ThingKind> {
+    pub async fn subreddits_new(&self) -> Result<Thing> {
         let response = self
-            .get_json::<ThingKind>("https://oauth.reddit.com/subreddits/new")
+            .get_json::<Thing>("https://oauth.reddit.com/subreddits/new")
             .await?;
 
         Ok(response)
     }
 
-    pub async fn subreddits_gold(&self) -> Result<ThingKind> {
+    pub async fn subreddits_gold(&self) -> Result<Thing> {
         let response = self
-            .get_json::<ThingKind>("https://oauth.reddit.com/subreddits/gold")
+            .get_json::<Thing>("https://oauth.reddit.com/subreddits/gold")
             .await?;
 
         Ok(response)
     }
 
-    pub async fn subreddits_default(&self) -> Result<ThingKind> {
+    pub async fn subreddits_default(&self) -> Result<Thing> {
         let response = self
-            .get_json::<ThingKind>("https://oauth.reddit.com/subreddits/default")
+            .get_json::<Thing>("https://oauth.reddit.com/subreddits/default")
             .await?;
 
         Ok(response)
     }
 
-    pub async fn subreddits_mine_subscriber(&self) -> Result<ThingKind> {
+    pub async fn subreddits_mine_subscriber(&self) -> Result<Thing> {
         let response = self
-            .get_json::<ThingKind>("https://oauth.reddit.com/subreddits/mine/subscriber")
+            .get_json::<Thing>("https://oauth.reddit.com/subreddits/mine/subscriber")
             .await?;
 
         Ok(response)
     }
 
-    pub async fn subreddits_mine_contributor(&self) -> Result<ThingKind> {
+    pub async fn subreddits_mine_contributor(&self) -> Result<Thing> {
         let response = self
-            .get_json::<ThingKind>("https://oauth.reddit.com/subreddits/mine/contributor")
+            .get_json::<Thing>("https://oauth.reddit.com/subreddits/mine/contributor")
             .await?;
 
         Ok(response)
     }
 
-    pub async fn subreddits_mine_moderator(&self) -> Result<ThingKind> {
+    pub async fn subreddits_mine_moderator(&self) -> Result<Thing> {
         let response = self
-            .get_json::<ThingKind>("https://oauth.reddit.com/subreddits/mine/moderator")
+            .get_json::<Thing>("https://oauth.reddit.com/subreddits/mine/moderator")
             .await?;
 
         Ok(response)
     }
 
-    pub async fn about_moderators(&self, subreddit: &str) -> Result<ThingKind> {
+    pub async fn about_moderators(&self, subreddit: &str) -> Result<Thing> {
         let response = self
-            .get_json::<ThingKind>(&format!(
+            .get_json::<Thing>(&format!(
                 " https://oauth.reddit.com/r/{}/about/moderators",
                 subreddit
             ))
@@ -219,9 +218,9 @@ impl Rucola {
         Ok(response)
     }
 
-    pub async fn wiki_pages(&self, subreddit: &str) -> Result<ThingKind> {
+    pub async fn wiki_pages(&self, subreddit: &str) -> Result<Thing> {
         let response = self
-            .get_json::<ThingKind>(&format!(
+            .get_json::<Thing>(&format!(
                 " https://oauth.reddit.com/r/{}/wiki/pages",
                 subreddit
             ))

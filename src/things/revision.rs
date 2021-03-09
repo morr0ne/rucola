@@ -1,4 +1,4 @@
-use super::{Listing, ThingKind};
+use super::{Listing, Thing};
 use serde::Deserialize;
 #[cfg(feature = "serialize")]
 use serde::Serialize;
@@ -10,7 +10,7 @@ pub type Revision = Listing<RevisionData>;
 #[cfg_attr(feature = "debug_attr", derive(Debug))]
 #[cfg_attr(feature = "deny_unknown_fields", serde(deny_unknown_fields))]
 pub struct RevisionData {
-    pub author: Option<ThingKind>,
+    pub author: Option<Thing>,
     pub id: String,
     pub page: String,
     pub reason: Option<String>,
