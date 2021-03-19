@@ -89,7 +89,7 @@ pub struct Features {
     chat_group_rollout: bool,
     do_not_track: bool,
     expensive_coins_package: bool,
-    econ_wallet_service: bool,
+    econ_wallet_service: Option<bool>,
     is_email_permission_required: bool,
     mod_service_mute_writes: bool,
     mod_awards: bool,
